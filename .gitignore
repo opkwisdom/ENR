@@ -1,0 +1,13 @@
+# checkpoints & logs
+checkpoints/
+wandb/
+13sent/
+lightning_logs/
+
+# cache files
+__pycache__/
+*.pyc
+
+# data files
+*.csv
+*.png
