@@ -34,7 +34,7 @@ class BaseModel(LightningModule):
         input_embs =  torch.cat([self.input_soft_prompt.unsqueeze(0).expand(input_ids.shape[0],-1,-1),self.model.embeddings(input_ids)], dim=1)
         attention_mask = torch.cat([mask, attention_mask], dim=1)
         outputs = self.model(inputs_embeds=input_embs, attention_mask=attention_mask)
-        hidden_states = outputs.last_hidden_state[:,:self.cfg.dep,:] 
+        hidden_states = outputs.last_hidden_state[:,:self.cfg.dep,:]
         logits = torch.einsum('bnh,nho->bno', hidden_states, self.code_book)
         return logits
 

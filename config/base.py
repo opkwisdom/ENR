@@ -10,6 +10,12 @@ def str2bool(v):
         raise argparse.ArgumentTypeError("Boolean value expected.")
 
 
+def list_of_ints(arg):
+    arg = arg.strip('[]')
+    return list(map(int, arg.split(',')))
+
+
+
 def load_config():
     parser = argparse.ArgumentParser()
 
@@ -26,6 +32,7 @@ def load_config():
     parser.add_argument("--shard_num", type=int, default=0)
     parser.add_argument("--n_samples", type=int, default=1000)
     parser.add_argument("--n_negs", type=int, default=100)
+    parser.add_argument("--codebook_dir", type=str, default="data/bge_base_en_v1.5")
 
     ## RQ    
     parser.add_argument("--nbit", type=int, default=2048)
@@ -33,7 +40,7 @@ def load_config():
     
     ## WANDB
     parser.add_argument("--wandb_project", type=str, default="ENR")
-    parser.add_argument("--wandb_entity", type=str, default="keunhakim98")
+    parser.add_argument("--wandb_entity", type=str, default="hjunho-sungkyunkwan-university")
     parser.add_argument("--wandb_notes", type=str, default="base")
 
     ## GPU
@@ -55,7 +62,7 @@ def load_config():
     parser.add_argument("--resume_from_checkpoint", help="Default: none")
 
     ## CHECKPOINT
-    parser.add_argument("--checkpoint_dirpath", type=str, default="checkpoints")
+    parser.add_argument("--checkpoint_dirpath", type=str, default="src_jh/checkpoints")
     parser.add_argument(
         "--checkpoint_filename", type=str, default="ckpt-{epoch:03d}-{val_loss:.5f}"
     )
@@ -95,6 +102,9 @@ def load_config():
     parser.add_argument("--accumulate_grad_batches", type=int, default=1)
     parser.add_argument("--warmup_ratio", type=float, default=0.05)
 
+    parser.add_argument("--smtid_layer", type=list_of_ints, default="[2, 4, 6, 8, 9, 10, 11, 12]",
+                        help="List of layer numbers to select")
+
     ## VALIDATION
     parser.add_argument("--validation_interval", type=int, default=1)
     parser.add_argument("--earlystop_patience", type=int, default=3)
@@ -106,6 +116,7 @@ def load_config():
 
     ## LOG
     parser.add_argument("--log_interval", type=int, default=50)
+    parser.add_argument("--prefix_accuracy", type=list_of_ints, default="[1, 5, 10, 20]")
 
     ## OUTPUT
     parser.add_argument("--output_dir", type=str, default='')

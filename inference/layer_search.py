@@ -270,7 +270,7 @@ def _batch_search_queries():
     
 
 if __name__ == "__main__":
-    # _batch_search_queries()
-    logger = _setup_logger(args.search_out_dir)
-    logger.info('Args={}'.format(str(args)))
-    write_faiss_index(logger)
+    _batch_search_queries()
+    # logger = _setup_logger(args.search_out_dir)
+    # logger.info('Args={}'.format(str(args)))
+    # write_faiss_index(logger)
